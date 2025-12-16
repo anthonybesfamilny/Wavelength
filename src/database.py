@@ -13,3 +13,19 @@ class Database:
             CREATE TABLE IF NOT EXISTS Wavelength(
             playerdata TEXT NOT NULL
             );""")
+        
+    def add_playerdata(self, playerdata):
+        playerdata_json = json.dumps(playerdata)
+        self.cursor.execute(
+            "INSERT INTO Wavelength (playerdata) VALUES (?);",
+            (playerdata_json,)
+        )
+        self.connection.commit()
+        
+    def get_all_playerdata(self):
+        self.cursor.execute("SELECT * FROM Wavelength;")
+        rows = self.cursor.fetchall()
+        return [json.loads(row[0]) for row in rows]
+    
+    def close(self):
+        self.connection.close()

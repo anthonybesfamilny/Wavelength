@@ -3,7 +3,7 @@ import json
 
 class Database:
     def __init__(self, database_name="Wavelength.db"):
-        self.connection = sqlite3.connection()
+        self.connection = sqlite3.connect(database_name)
         self.cursor = self.connection.cursor()
         self._make_table()
 
